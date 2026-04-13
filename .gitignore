@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 
+=======
+backend/test_images/
+*.jpg
+*.png
+*.mp4
+>>>>>>> c2927c9 (clean deployment version)
 # =========================
 # Python
 # =========================
