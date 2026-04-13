@@ -4,6 +4,7 @@ Environment variables and path constants.
 """
 
 import os
+import secrets
 
 from dotenv import load_dotenv
 
@@ -22,3 +23,6 @@ PDF_PATH = os.getenv("PDF_PATH", os.path.join(_BACKEND_DIR, "data", "medical_boo
 # ── API Keys ───────────────────────────────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+
+# ── Security ───────────────────────────────────────────────────────────────────
+SESSION_SECRET_KEY = os.getenv("SESSION_SECRET_KEY", secrets.token_hex(32))

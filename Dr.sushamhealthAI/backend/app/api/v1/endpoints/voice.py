@@ -13,11 +13,11 @@ import edge_tts
 from starlette.responses import StreamingResponse
 import langid
 
+from app.core.config import GROQ_API_KEY
+
 logger = logging.getLogger("dr_susham")
 
 router = APIRouter(tags=["Voice"])
-
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
 def _get_groq_client():

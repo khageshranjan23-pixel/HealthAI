@@ -16,7 +16,6 @@ Module layout:
 """
 
 import os
-import secrets
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -27,7 +26,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1.api import api_router
 from app.api.image_api import router as image_router
-from app.core.config import CHAT_DB_PATH, PDF_PATH, VECTOR_STORE_DIR
+from app.core.config import CHAT_DB_PATH, PDF_PATH, VECTOR_STORE_DIR, SESSION_SECRET_KEY
 from app.core.logging_config import logger
 from app.services.chat_service import clinical_engine
 from app.services.database_service import db_service
@@ -89,7 +88,7 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=secrets.token_hex(32)
+    secret_key=SESSION_SECRET_KEY,
 )
 
 
@@ -136,4 +135,4 @@ else:
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
