@@ -1,0 +1,52 @@
+
+# =========================
+# Python
+# =========================
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Env files (IMPORTANT)
+.env
+
+# Logs
+logs/
+*.log
+
+# Model / cache
+model_cache/
+storage/
+data/
+*.pt
+*.pth
+
+# =========================
+# Node / Frontend
+# =========================
+node_modules/
+dist/
+build/
+coverage/
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# =========================
+# Testing
+# =========================
+.coverage
+.pytest_cache/
+
+# =========================
+# Docker
+# =========================
+*.tar
