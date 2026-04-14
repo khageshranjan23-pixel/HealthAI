@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 backend/test_images/
@@ -6,6 +7,16 @@ backend/test_images/
 *.png
 *.mp4
 >>>>>>> c2927c9 (clean deployment version)
+=======
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+>>>>>>> c5b34cc (clean commit)
 # =========================
 # Python
 # =========================
@@ -16,36 +27,36 @@ __pycache__/
 *.pyo
 *.pyd
 *.sqlite3
+*.log
 
 # Env files (IMPORTANT)
 .env
 
-# Logs
-logs/
-*.log
+# =========================
+# Backend
+# =========================
+backend/logs/
+backend/test_images/
 
-# Model / cache
-model_cache/
-storage/
-data/
-*.pt
-*.pth
+# Ignore storage/data (but allow important files later if needed)
+backend/storage/*
+backend/data/*
 
 # =========================
-# Node / Frontend
+# Frontend (VERY IMPORTANT)
+# =========================
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+
+# =========================
+# General Node
 # =========================
 node_modules/
 dist/
 build/
-coverage/
-
-# =========================
-# OS / Editor
-# =========================
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
 
 # =========================
 # Testing
@@ -57,3 +68,17 @@ Thumbs.db
 # Docker
 # =========================
 *.tar
+
+# =========================
+# Media files (ignore unnecessary)
+# =========================
+*.mp4
+*.jpg
+*.png
+
+# =========================
+# IMPORTANT: ALLOW MODELS & PDF
+# =========================
+!*.pth
+!*.pt
+!*.pdf
