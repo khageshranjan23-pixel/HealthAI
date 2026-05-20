@@ -1250,7 +1250,226 @@ animation: inputBreath 6s ease-in-out infinite;
   width: 8px; height: 8px; border-radius: 50%; background: #ef4444;
   animation: aiBlink 1s ease-in-out infinite;
 }
+
+/* ═══ SKINSEVA ANALYSIS PANEL ═════════════════════════════════ */
+.ss-panel {
+  margin-top: 16px; padding: 20px; border-radius: var(--r-lg);
+  background: linear-gradient(135deg, rgba(0,245,255,0.03), rgba(139,92,246,0.03));
+  border: 1px solid rgba(0,245,255,0.15);
+  animation: ssPanelIn 0.5s var(--ease) both;
+}
+@keyframes ssPanelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.ss-section { margin-bottom: 20px; }
+.ss-section:last-child { margin-bottom: 0; }
+.ss-section-title {
+  font-family: var(--f-display); font-weight: 700; font-size: 14px;
+  color: var(--mint); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.ss-section-title i { font-size: 12px; }
+
+/* ABCDE Scores */
+.ss-scores { display: flex; flex-direction: column; gap: 10px; }
+.ss-score-row {
+  display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+  border-radius: var(--r-sm); background: var(--glass-1);
+  border: 1px solid var(--border-1); transition: all 0.3s ease;
+}
+.ss-score-row:hover { border-color: var(--border-mint); background: rgba(0,245,255,0.04); }
+.ss-score-label {
+  width: 90px; font-family: var(--f-body); font-weight: 600; font-size: 12.5px;
+  color: var(--t1); text-transform: capitalize;
+}
+.ss-score-bar-wrap { flex: 1; height: 8px; border-radius: 4px; background: var(--glass-2); overflow: hidden; position: relative; }
+.ss-score-bar {
+  height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+.ss-score-bar.low { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.ss-score-bar.medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.ss-score-bar.high { background: linear-gradient(90deg, #ef4444, #f87171); }
+.ss-score-bar::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px;
+  background: rgba(255,255,255,0.6); border-radius: 2px;
+  animation: ssBarGlow 2s ease-in-out infinite;
+}
+@keyframes ssBarGlow { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+.ss-score-value {
+  width: 45px; text-align: right; font-family: var(--f-mono); font-size: 12px;
+  font-weight: 600; color: var(--t1);
+}
+.ss-score-badge {
+  padding: 2px 8px; border-radius: var(--r-full); font-family: var(--f-mono);
+  font-size: 9px; font-weight: 600; text-transform: uppercase;
+}
+.ss-score-badge.low { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+.ss-score-badge.medium { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+.ss-score-badge.high { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+.ss-score-conf {
+  font-family: var(--f-mono); font-size: 9px; color: var(--t3); min-width: 40px; text-align: right;
+}
+
+/* Overall Risk Gauge */
+.ss-risk-gauge {
+  display: flex; align-items: center; gap: 16px; padding: 16px;
+  border-radius: var(--r-md); background: var(--glass-1);
+  border: 1px solid var(--border-1);
+}
+.ss-risk-circle {
+  width: 80px; height: 80px; border-radius: 50%; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  background: conic-gradient(
+    var(--risk-color, #22c55e) calc(var(--risk-pct, 0) * 1%),
+    rgba(255,255,255,0.05) 0
+  );
+  flex-shrink: 0;
+}
+.ss-risk-circle::before {
+  content: ''; position: absolute; inset: 6px; border-radius: 50%;
+  background: var(--panel);
+}
+.ss-risk-number {
+  position: relative; z-index: 1; font-family: var(--f-display);
+  font-weight: 800; font-size: 20px; color: var(--t1);
+}
+.ss-risk-info { flex: 1; }
+.ss-risk-label { font-family: var(--f-display); font-weight: 700; font-size: 14px; color: var(--t1); }
+.ss-risk-sub { font-size: 12px; color: var(--t2); margin-top: 4px; line-height: 1.5; }
+
+/* Fitzpatrick Badge */
+.ss-fitz-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px; border-radius: var(--r-md);
+  background: var(--glass-1); border: 1px solid var(--border-1);
+}
+.ss-fitz-swatch {
+  width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+.ss-fitz-type { font-family: var(--f-display); font-weight: 700; font-size: 13px; color: var(--t1); }
+.ss-fitz-label { font-size: 11px; color: var(--t2); }
+
+/* Dermoscopy Comparison */
+.ss-dermo-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.ss-dermo-img-wrap {
+  border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-1);
+  position: relative;
+}
+.ss-dermo-img-wrap img { width: 100%; display: block; }
+.ss-dermo-label {
+  position: absolute; bottom: 8px; left: 8px;
+  padding: 3px 10px; border-radius: var(--r-full);
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  font-family: var(--f-mono); font-size: 9px; color: var(--mint);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* Discordance Alert */
+.ss-discord-alert {
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.ss-discord-alert.high {
+  background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.2);
+}
+.ss-discord-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(245,158,11,0.1); display: flex; align-items: center;
+  justify-content: center; font-size: 16px; color: #f59e0b;
+}
+.ss-discord-alert.high .ss-discord-icon { background: rgba(239,68,68,0.1); color: #ef4444; }
+.ss-discord-body { flex: 1; }
+.ss-discord-title { font-weight: 700; font-size: 13px; color: var(--t1); margin-bottom: 4px; }
+.ss-discord-text { font-size: 12px; color: var(--t2); line-height: 1.6; }
+
+/* Dual Debate Panel */
+.ss-debate { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ss-debate-agent {
+  padding: 14px; border-radius: var(--r-md);
+  background: var(--glass-1); border: 1px solid var(--border-1);
+}
+.ss-debate-agent.derm { border-top: 2px solid #22c55e; }
+.ss-debate-agent.onc { border-top: 2px solid #ef4444; }
+.ss-debate-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.ss-debate-avatar {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.ss-debate-agent.derm .ss-debate-avatar { background: rgba(34,197,94,0.1); color: #22c55e; }
+.ss-debate-agent.onc .ss-debate-avatar { background: rgba(239,68,68,0.1); color: #ef4444; }
+.ss-debate-name { font-family: var(--f-display); font-weight: 700; font-size: 12px; color: var(--t1); }
+.ss-debate-body { font-size: 12px; color: var(--t2); line-height: 1.6; }
+.ss-debate-consensus {
+  grid-column: 1 / -1; padding: 12px 16px; border-radius: var(--r-md);
+  background: rgba(0,245,255,0.04); border: 1px solid rgba(0,245,255,0.15);
+  font-size: 12px; color: var(--t2); line-height: 1.6;
+}
+.ss-debate-consensus strong { color: var(--mint); }
+
+/* Longitudinal Tracker */
+.ss-timeline { display: flex; flex-direction: column; gap: 8px; }
+.ss-timeline-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 12px; border-radius: var(--r-sm);
+  background: var(--glass-1); border: 1px solid var(--border-1);
+}
+.ss-timeline-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--mint); flex-shrink: 0;
+}
+.ss-timeline-date { font-family: var(--f-mono); font-size: 10px; color: var(--t3); min-width: 70px; }
+.ss-timeline-metrics { flex: 1; display: flex; gap: 12px; font-size: 11px; color: var(--t2); }
+.ss-alert-banner {
+  padding: 10px 14px; border-radius: var(--r-sm); margin-top: 8px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600;
+}
+.ss-alert-banner.urgent {
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: #ef4444;
+}
+.ss-alert-banner.warning {
+  background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #f59e0b;
+}
+
+/* Enhancements list */
+.ss-enhance-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ss-enhance-chip {
+  padding: 4px 10px; border-radius: var(--r-full);
+  background: rgba(0,245,255,0.06); border: 1px solid rgba(0,245,255,0.15);
+  font-family: var(--f-mono); font-size: 9px; color: var(--mint);
+}
+
+/* Regional Context */
+.ss-regional {
+  padding: 12px 16px; border-radius: var(--r-md);
+  background: var(--glass-1); border: 1px solid var(--border-1);
+}
+.ss-regional-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ss-regional-icon { font-size: 16px; }
+.ss-regional-region { font-family: var(--f-display); font-weight: 700; font-size: 13px; color: var(--t1); }
+.ss-regional-context { font-size: 12px; color: var(--t2); line-height: 1.6; }
+
+/* Question reasoning */
+.ss-q-reasoning {
+  margin-top: 6px; padding: 6px 10px; border-radius: var(--r-xs);
+  background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.15);
+  font-size: 10px; color: var(--rose); font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .ss-dermo-compare { grid-template-columns: 1fr; }
+  .ss-debate { grid-template-columns: 1fr; }
+}
 `;
+
 
 // ═══════════════════════════════════════════════════════════════
 //  SECTION 2 — UTILITY HELPERS (UNCHANGED)
@@ -1613,35 +1832,194 @@ function MessageBubble({ msg, onFollowUpClick }) {
         <div className="nc-bubble-b">
           <ReactMarkdown>{msg.content}</ReactMarkdown>
 
-          {/* ═══ Follow-Up Question Chips ═══ */}
-          {msg.followUp && msg.followUp.questions && msg.followUp.questions.length > 0 && (
-            <div className="nc-followup-section">
-              <div className="nc-followup-label">
-                <i className="fas fa-stethoscope" />
-                Doctor is asking follow-up questions
-              </div>
-              {msg.followUp.questions.map((q, qIdx) => (
-                <div key={qIdx} className="nc-followup-q">
-                  <div className="nc-followup-qtext">{q.text}</div>
-                  <div className="nc-followup-opts">
-                    {(q.options || []).map((opt, oIdx) => (
-                      <button
-                        key={oIdx}
-                        className="nc-followup-chip"
-                        onClick={() => onFollowUpClick && onFollowUpClick(opt)}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
+          {/* ═══ SkinSeva Analysis Panel ═══ */}
+          {msg.skinSevaData && <SkinSevaPanel data={msg.skinSevaData} />}
+
+          {/* ═══ Clinical Follow-Up Question Card ═══ */}
+          {msg.followUp && msg.followUp.questions && msg.followUp.questions.length > 0 && (() => {
+            const fu = msg.followUp;
+            const dim = fu.dimension || fu.question_category || '';
+            const dimColorMap = {
+              ONSET: '#6EE7B7', CHARACTER: '#93C5FD', LOCATION: '#FCA5A5',
+              SEVERITY: '#FCD34D', TIMING: '#C4B5FD', MODIFYING_FACTORS: '#6EE7B7',
+              ASSOCIATED_SYMPTOMS: '#F9A8D4', RED_FLAGS: '#FF6B6B',
+              HISTORY: '#94A3B8', MEDICATIONS: '#86EFAC',
+            };
+            const dimColor = dimColorMap[dim] || '#94A3B8';
+            const urgency = fu.urgency || 'routine';
+            const urgencyConfig = {
+              routine: { bg: 'rgba(34,197,94,0.08)', border: 'rgba(34,197,94,0.2)', color: '#4ade80', label: 'Routine' },
+              important: { bg: 'rgba(251,191,36,0.08)', border: 'rgba(251,191,36,0.2)', color: '#fbbf24', label: 'Important' },
+              urgent: { bg: 'rgba(248,113,113,0.08)', border: 'rgba(248,113,113,0.2)', color: '#f87171', label: '⚠️ Urgent — Answer Carefully' },
+            };
+            const uCfg = urgencyConfig[urgency] || urgencyConfig.routine;
+            const differential = fu.differential || [];
+            const targetConditions = fu.target_conditions || [];
+
+            return (
+              <div className="nc-followup-section" style={{
+                background: 'linear-gradient(135deg, rgba(0,245,255,0.02), rgba(139,92,246,0.02))',
+                border: '1px solid rgba(0,245,255,0.2)',
+                borderRadius: 'var(--r-lg)', padding: '20px', position: 'relative', overflow: 'hidden',
+              }}>
+                {/* Top accent line */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+                  background: `linear-gradient(90deg, ${dimColor}, rgba(147,197,253,0.5), transparent)`,
+                }} />
+
+                {/* Badges row */}
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', marginBottom: 14 }}>
+                  {dim && (
+                    <span style={{
+                      display: 'inline-block', fontSize: '10px', fontWeight: 600, letterSpacing: '0.8px',
+                      padding: '3px 10px', borderRadius: '4px', textTransform: 'uppercase',
+                      background: `${dimColor}22`, color: dimColor,
+                      fontFamily: 'var(--f-mono)',
+                    }}>
+                      {dim.replace(/_/g, ' ')}
+                    </span>
+                  )}
+                  {urgency !== 'routine' && (
+                    <span style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '5px',
+                      fontSize: '11px', fontWeight: 600, letterSpacing: '0.5px',
+                      padding: '4px 12px', borderRadius: '20px',
+                      background: uCfg.bg, border: `1px solid ${uCfg.border}`, color: uCfg.color,
+                    }}>
+                      {uCfg.label}
+                    </span>
+                  )}
+                  <span style={{
+                    marginLeft: 'auto', fontSize: '11px', color: 'var(--t3)',
+                    fontFamily: 'var(--f-mono)',
+                  }}>
+                    Q{fu.triage_round}/{fu.max_rounds}
+                  </span>
                 </div>
-              ))}
-              <div className="nc-followup-round">
-                <i className="fas fa-clipboard-question" />
-                Round {msg.followUp.triage_round} of {msg.followUp.max_rounds}
+
+                {/* ── Live Differential Diagnosis ── */}
+                {differential.length > 0 && (
+                  <div style={{
+                    background: 'var(--glass-1)', border: '1px solid var(--border-1)',
+                    borderRadius: 'var(--r-md)', padding: '12px 14px', marginBottom: 14,
+                  }}>
+                    <div style={{
+                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.8px',
+                      color: 'var(--mint)', textTransform: 'uppercase', marginBottom: 10,
+                      fontFamily: 'var(--f-mono)',
+                    }}>
+                      <i className="fas fa-chart-pie" style={{ marginRight: 6 }} />
+                      Running Differential
+                    </div>
+                    {differential.map((d, i) => {
+                      const prob = d.probability || 0;
+                      const isTarget = targetConditions.includes(d.condition);
+                      const barColor = prob >= 50 ? '#f87171' : prob >= 30 ? '#fbbf24' : '#4ade80';
+                      return (
+                        <div key={i} style={{
+                          display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6,
+                          opacity: prob < 10 ? 0.5 : 1,
+                        }}>
+                          <div style={{
+                            width: 110, fontSize: '12px', fontWeight: isTarget ? 600 : 400,
+                            color: isTarget ? 'var(--t1)' : 'var(--t2)',
+                            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                          }} title={d.condition}>
+                            {isTarget && <span style={{ color: dimColor, marginRight: 4 }}>▸</span>}
+                            {d.condition}
+                          </div>
+                          <div style={{
+                            flex: 1, height: 5, borderRadius: 3,
+                            background: 'rgba(255,255,255,0.06)', overflow: 'hidden',
+                          }}>
+                            <div style={{
+                              height: '100%', borderRadius: 3, width: `${prob}%`,
+                              background: `linear-gradient(90deg, ${barColor}aa, ${barColor})`,
+                              transition: 'width 1s cubic-bezier(0.34,1.56,0.64,1)',
+                            }} />
+                          </div>
+                          <span style={{
+                            fontSize: '11px', fontWeight: 600, minWidth: 32, textAlign: 'right',
+                            fontFamily: 'var(--f-mono)', color: barColor,
+                          }}>
+                            {prob}%
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {targetConditions.length >= 2 && (
+                      <div style={{
+                        marginTop: 8, fontSize: '10px', color: 'var(--t3)',
+                        fontFamily: 'var(--f-mono)', textAlign: 'center',
+                        padding: '4px 8px', borderRadius: '4px',
+                        background: 'rgba(0,245,255,0.04)',
+                      }}>
+                        Differentiating: <span style={{ color: dimColor, fontWeight: 600 }}>
+                          {targetConditions.join(' vs ')}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Question text */}
+                {fu.questions.map((q, qIdx) => (
+                  <div key={qIdx} style={{
+                    fontSize: '15px', lineHeight: 1.65, color: 'var(--t1)',
+                    fontWeight: 400, marginBottom: 12,
+                  }}>
+                    {q.text}
+                  </div>
+                ))}
+
+                {/* Clinical reasoning chip */}
+                {fu.reasoning && (
+                  <div style={{
+                    background: 'rgba(148,163,184,0.06)', borderRadius: '8px',
+                    padding: '8px 12px', fontSize: '12px', color: 'var(--t3)',
+                    fontStyle: 'italic', lineHeight: 1.5, marginBottom: 10,
+                  }}>
+                    <i className="fas fa-brain" style={{ marginRight: 6, fontSize: 10, opacity: 0.7 }} />
+                    {fu.reasoning}
+                  </div>
+                )}
+
+                {/* Expected impact */}
+                {fu.expected_impact && (
+                  <div style={{
+                    background: 'rgba(110,231,183,0.04)', borderRadius: '8px',
+                    padding: '6px 12px', fontSize: '11px', color: 'var(--mint)',
+                    lineHeight: 1.5, marginBottom: 10, border: '1px solid rgba(110,231,183,0.1)',
+                  }}>
+                    <i className="fas fa-arrow-trend-up" style={{ marginRight: 6, fontSize: 10 }} />
+                    {fu.expected_impact}
+                  </div>
+                )}
+
+                {/* Progress dots */}
+                <div style={{ display: 'flex', gap: 4, justifyContent: 'center', marginTop: 6 }}>
+                  {Array.from({ length: fu.max_rounds }).map((_, i) => (
+                    <div key={i} style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: i < fu.triage_round
+                        ? 'var(--mint)'
+                        : 'rgba(110,231,183,0.15)',
+                      transition: 'background 0.3s',
+                    }} />
+                  ))}
+                </div>
+
+                {/* Hint to type answer */}
+                <div style={{
+                  textAlign: 'center', marginTop: 8, fontSize: '11px',
+                  color: 'var(--t3)', fontFamily: 'var(--f-mono)', letterSpacing: '0.3px',
+                }}>
+                  ↓ Type your answer below
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
         <div className="nc-msg-foot">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -1666,6 +2044,258 @@ function MessageBubble({ msg, onFollowUpClick }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SKINSEVA ANALYSIS PANEL COMPONENT
+// ═══════════════════════════════════════════════════════════════
+function SkinSevaPanel({ data }) {
+  if (!data) return null;
+
+  const abcde = data.abcde_plus || {};
+  const fitz = data.fitzpatrick || {};
+  const dermo = data.dermoscopy || {};
+  const discord = data.discordance || {};
+  const debate = data.dual_debate || {};
+  const longitudinal = data.longitudinal || {};
+  const regional = data.regional_adjustment || {};
+  const overall = abcde.overall_risk || {};
+
+  const riskColor = overall.score >= 60 ? '#ef4444' : (overall.score >= 35 ? '#f59e0b' : '#22c55e');
+  const riskLevel = overall.risk_level || 'LOW';
+
+  return (
+    <div className="ss-panel" id="skinseva-panel">
+      {/* ── Overall Risk Gauge ── */}
+      <div className="ss-section">
+        <div className="ss-section-title"><i className="fas fa-gauge-high" /> Overall Malignancy Risk</div>
+        <div className="ss-risk-gauge" style={{ '--risk-pct': overall.score || 0, '--risk-color': riskColor }}>
+          <div className="ss-risk-circle">
+            <span className="ss-risk-number" style={{ color: riskColor }}>{overall.score || 0}%</span>
+          </div>
+          <div className="ss-risk-info">
+            <div className="ss-risk-label" style={{ color: riskColor }}>
+              {riskLevel} RISK {overall.uncertainty ? `± ${overall.uncertainty}%` : ''}
+            </div>
+            <div className="ss-risk-sub">
+              Computed from ABCDE+ dimensions with test-time augmentation uncertainty.
+              {fitz.correction_factors?.dark_skin_correction_applied && (
+                <span style={{ color: '#f59e0b' }}> Fitzpatrick correction applied.</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── ABCDE+ Score Bars ── */}
+      <div className="ss-section">
+        <div className="ss-section-title"><i className="fas fa-chart-bar" /> ABCDE+ Dimension Scores</div>
+        <div className="ss-scores">
+          {['asymmetry', 'border', 'color', 'diameter'].map(dim => {
+            const d = abcde[dim];
+            if (!d || d.score === undefined || d.score === null) return null;
+            const risk = (d.risk_level || 'low').toLowerCase();
+            return (
+              <div key={dim} className="ss-score-row">
+                <span className="ss-score-label">{dim}</span>
+                <div className="ss-score-bar-wrap">
+                  <div className={`ss-score-bar ${risk}`} style={{ width: `${d.score}%` }} />
+                </div>
+                <span className="ss-score-value">{d.score}</span>
+                <span className={`ss-score-badge ${risk}`}>{d.risk_level}</span>
+                <span className="ss-score-conf">{d.confidence}%</span>
+              </div>
+            );
+          })}
+          {/* Evolution */}
+          {abcde.evolution && abcde.evolution.score !== null && abcde.evolution.score !== undefined && (
+            <div className="ss-score-row">
+              <span className="ss-score-label">Evolution</span>
+              <div className="ss-score-bar-wrap">
+                <div className={`ss-score-bar ${(abcde.evolution.risk_level || 'low').toLowerCase()}`}
+                     style={{ width: `${abcde.evolution.score}%` }} />
+              </div>
+              <span className="ss-score-value">{abcde.evolution.score}</span>
+              <span className={`ss-score-badge ${(abcde.evolution.risk_level || 'low').toLowerCase()}`}>
+                {abcde.evolution.risk_level}
+              </span>
+            </div>
+          )}
+          {abcde.evolution && abcde.evolution.needs && (
+            <div style={{ fontSize: '11px', color: 'var(--t3)', fontStyle: 'italic', paddingLeft: '12px' }}>
+              <i className="fas fa-info-circle" style={{ marginRight: 6 }} />
+              {abcde.evolution.needs}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Fitzpatrick Badge ── */}
+      {fitz.type && fitz.type !== 'Unknown' && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-palette" /> Detected Skin Tone</div>
+          <div className="ss-fitz-badge">
+            <div className="ss-fitz-swatch" style={{ background: fitz.hex_color || '#888' }} />
+            <div>
+              <div className="ss-fitz-type">Fitzpatrick Type {fitz.type}</div>
+              <div className="ss-fitz-label">{fitz.label} — ITA: {fitz.ita}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Dermoscopy Comparison ── */}
+      {dermo.enhanced_image_b64 && dermo.original_b64 && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-microscope" /> Dermoscopy Simulation</div>
+          <div className="ss-dermo-compare">
+            <div className="ss-dermo-img-wrap">
+              <img src={`data:image/png;base64,${dermo.original_b64}`} alt="Original" />
+              <span className="ss-dermo-label">Original</span>
+            </div>
+            <div className="ss-dermo-img-wrap">
+              <img src={`data:image/png;base64,${dermo.enhanced_image_b64}`} alt="Dermoscopy" />
+              <span className="ss-dermo-label">Simulated Dermoscopy</span>
+            </div>
+          </div>
+          {dermo.enhancements_applied && dermo.enhancements_applied.length > 0 && (
+            <div className="ss-enhance-list">
+              {dermo.enhancements_applied.map((e, i) => (
+                <span key={i} className="ss-enhance-chip">{e}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Discordance Alert ── */}
+      {discord.alert && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-exclamation-triangle" /> Symptom-Visual Discordance</div>
+          <div className={`ss-discord-alert ${discord.discordance_level === 'HIGH' ? 'high' : ''}`}>
+            <div className="ss-discord-icon">
+              <i className="fas fa-code-compare" />
+            </div>
+            <div className="ss-discord-body">
+              <div className="ss-discord-title">
+                Visual: {discord.visual_top} vs Symptoms: {discord.symptom_top}
+              </div>
+              <div className="ss-discord-text">
+                Concordance: {((discord.concordance_score || 0) * 100).toFixed(0)}% —{' '}
+                {discord.explanation || 'Visual and symptom analyses show different results.'}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Dual Agent Debate ── */}
+      {debate.debate_completed && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-comments" /> Dual Agent Debate</div>
+          <div className="ss-debate">
+            {/* Dermatologist */}
+            <div className="ss-debate-agent derm">
+              <div className="ss-debate-header">
+                <div className="ss-debate-avatar"><i className="fas fa-user-doctor" /></div>
+                <div className="ss-debate-name">Dermatologist</div>
+              </div>
+              <div className="ss-debate-body">
+                <strong>{debate.dermatologist?.summary}</strong>
+                <br />{debate.dermatologist?.reasoning}
+                {debate.dermatologist?.reassuring_factors?.length > 0 && (
+                  <div style={{ marginTop: 6 }}>
+                    ✓ {debate.dermatologist.reassuring_factors.join(' • ')}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Oncologist */}
+            <div className="ss-debate-agent onc">
+              <div className="ss-debate-header">
+                <div className="ss-debate-avatar"><i className="fas fa-radiation" /></div>
+                <div className="ss-debate-name">Oncologist</div>
+              </div>
+              <div className="ss-debate-body">
+                <strong>{debate.oncologist?.summary}</strong>
+                <br />{debate.oncologist?.reasoning}
+                {debate.oncologist?.red_flags?.length > 0 && (
+                  <div style={{ marginTop: 6, color: '#ef4444' }}>
+                    ⚠ {debate.oncologist.red_flags.join(' • ')}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Consensus */}
+            {debate.consensus && (
+              <div className="ss-debate-consensus">
+                <strong><i className="fas fa-gavel" /> Consensus: </strong>
+                {debate.consensus.recommendation}
+                {debate.consensus.needs_professional_review && (
+                  <div style={{ marginTop: 6, color: '#f59e0b' }}>
+                    <i className="fas fa-stethoscope" /> Professional review recommended
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Longitudinal Tracker ── */}
+      {longitudinal.trajectory?.has_history && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-chart-line" /> Lesion Trajectory</div>
+          {longitudinal.trajectory.timeline?.map((snap, i) => (
+            <div key={i} className="ss-timeline-item">
+              <div className="ss-timeline-dot" />
+              <div className="ss-timeline-date">
+                {new Date(snap.timestamp).toLocaleDateString()}
+              </div>
+              <div className="ss-timeline-metrics">
+                {snap.diameter_mm && <span>⌀ {snap.diameter_mm}mm</span>}
+                {snap.overall_risk !== null && snap.overall_risk !== undefined && <span>Risk: {snap.overall_risk}%</span>}
+                {snap.predicted_disease && <span>{snap.predicted_disease}</span>}
+              </div>
+            </div>
+          ))}
+          {longitudinal.trajectory.growth_rate && (
+            <div style={{ marginTop: 8, fontSize: '12px', color: 'var(--t2)' }}>
+              Growth: {longitudinal.trajectory.growth_rate.total_growth_pct}% over{' '}
+              {longitudinal.trajectory.growth_rate.days_tracked} days
+            </div>
+          )}
+          {longitudinal.trajectory.alerts?.map((a, i) => (
+            <div key={i} className={`ss-alert-banner ${a.level.toLowerCase()}`}>
+              <i className={`fas ${a.level === 'URGENT' ? 'fa-triangle-exclamation' : 'fa-circle-exclamation'}`} />
+              {a.message}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ── Regional Context ── */}
+      {regional.applied && regional.context && (
+        <div className="ss-section">
+          <div className="ss-section-title"><i className="fas fa-map-location-dot" /> Regional Context</div>
+          <div className="ss-regional">
+            <div className="ss-regional-header">
+              <span className="ss-regional-icon">📍</span>
+              <span className="ss-regional-region">{regional.region}</span>
+            </div>
+            <div className="ss-regional-context">{regional.context}</div>
+            {regional.climate_factors?.length > 0 && (
+              <div className="ss-enhance-list" style={{ marginTop: 8 }}>
+                {regional.climate_factors.map((f, i) => (
+                  <span key={i} className="ss-enhance-chip">{f}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -2117,7 +2747,13 @@ export default function App() {
     showToast('Chat exported', 'success');
   }, [chatHistory, showToast]);
 
-  // Image upload (MULTI-MODEL CLASSIFICATION + RAG)
+  // ═══ SKINSEVA STATE ══════════════════════════════════════════
+  const [skinSevaData, setSkinSevaData] = useState(null);
+  const [skinTriageRound, setSkinTriageRound] = useState(0);
+  const [skinCollectedInfo, setSkinCollectedInfo] = useState([]);
+  const [lastSkinFile, setLastSkinFile] = useState(null);
+
+  // Image upload (MULTI-MODEL CLASSIFICATION + SKINSEVA)
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -2128,6 +2764,102 @@ export default function App() {
     setChatHistory(prev => [...prev, userMsg]);
     setIsTyping(true);
     setShowWelcome(false);
+
+    // Try SkinSeva analysis first
+    const skinForm = new FormData();
+    skinForm.append('file', file);
+    skinForm.append('session_id', currentSessionId || 'default');
+    skinForm.append('triage_round', '0');
+    skinForm.append('collected_info', '[]');
+
+    try {
+      const skinRes = await fetch(`${API_BASE}/analyze-skin`, { method: 'POST', body: skinForm });
+      const skinData = await skinRes.json();
+      console.log('SkinSeva Response:', skinData);
+
+      if (skinData.success && skinData.type === 'skinseva_analysis') {
+        // SkinSeva analysis successful — show full panel
+        setSkinSevaData(skinData);
+        setLastSkinFile(file);
+        setSkinTriageRound(0);
+        setSkinCollectedInfo([]);
+
+        const dp = skinData.disease_prediction || {};
+        const abcde = skinData.abcde_plus || {};
+        const fitz = skinData.fitzpatrick || {};
+        const overall = abcde.overall_risk || {};
+
+        let result = `## 🔬 SkinSeva Deep Analysis Complete\n\n`;
+        result += `**Detected Condition:** ${dp.disease || 'Analysis pending'}\n`;
+        result += `**Confidence:** ${((dp.confidence || 0) * 100).toFixed(1)}%\n`;
+        result += `**Skin Tone:** Fitzpatrick Type ${fitz.type || '?'} (${fitz.label || '?'})\n\n`;
+        result += `### 📊 ABCDE+ Malignancy Risk: ${overall.display || 'N/A'}\n\n`;
+
+        const dims = ['asymmetry', 'border', 'color', 'diameter'];
+        dims.forEach(dim => {
+          const d = abcde[dim];
+          if (d && d.score !== undefined && d.score !== null) {
+            const filled = Math.round(d.score / 10);
+            const bar = '█'.repeat(filled) + '░'.repeat(10 - filled);
+            const emoji = d.risk_level === 'HIGH' ? '🔴' : (d.risk_level === 'MEDIUM' ? '🟡' : '🟢');
+            result += `${emoji} **${dim.charAt(0).toUpperCase() + dim.slice(1)}:** ${d.score}/100 \`${bar}\` (${d.risk_level}, conf: ${d.confidence}%)\n`;
+          }
+        });
+
+        if (fitz.correction_factors?.dark_skin_correction_applied) {
+          result += `\n⚠️ *Dark skin correction applied — color thresholds adjusted for Fitzpatrick ${fitz.type}*\n`;
+        }
+
+        result += `\n---\n*Scroll down for detailed ABCDE+ analysis, dermoscopy view, and clinical questions.*\n`;
+
+        const botMsg = {
+          type: 'assistant', content: result,
+          timestamp: new Date().toLocaleTimeString(),
+          source: 'SkinSeva Engine',
+          skinSevaData: skinData,
+        };
+        setMessages(prev => [...prev, botMsg]);
+
+        // If there are clinical questions, show them
+        const cq = skinData.clinical_questions;
+        if (cq && cq.status === 'needs_info' && cq.question_text) {
+          const qMsg = {
+            type: 'assistant',
+            content: `I'd like to understand your condition better.\n\n**${cq.question_text}**`,
+            timestamp: new Date().toLocaleTimeString(),
+            source: 'Clinical Triage',
+            followUp: {
+              questions: [{ text: cq.question_text, options: cq.options || [] }],
+              triage_round: cq.triage_round || 1,
+              max_rounds: cq.max_rounds || 4,
+              reasoning: cq.reasoning || '',
+            },
+          };
+          setMessages(prev => [...prev, qMsg]);
+          setSkinTriageRound(cq.triage_round || 1);
+        }
+
+        // Show comprehensive diagnosis if available
+        if (skinData.comprehensive_diagnosis) {
+          const diagMsg = {
+            type: 'assistant',
+            content: skinData.comprehensive_diagnosis,
+            timestamp: new Date().toLocaleTimeString(),
+            source: 'Clinical Assessment',
+          };
+          setMessages(prev => [...prev, diagMsg]);
+        }
+
+        showToast('SkinSeva analysis complete', 'success');
+        setIsTyping(false);
+        event.target.value = '';
+        return;
+      }
+    } catch (skinErr) {
+      console.log('SkinSeva not available, falling back to standard:', skinErr);
+    }
+
+    // Fallback to standard image analysis
     const formData = new FormData();
     formData.append('file', file);
     try {
@@ -2136,18 +2868,13 @@ export default function App() {
       console.log('Image API Response:', data);
 
       if (data.type === 'medical_diagnosis') {
-        // --- Medical image detected ---
         const categoryLabels = {
-          skin: '🧬 Skin Disease',
-          xray: '🦴 X-ray / Fracture',
-          retina: '👁️ Retinal / Eye Disease',
-          general: '🏥 General Medical Condition',
+          skin: '🧬 Skin Disease', xray: '🦴 X-ray / Fracture',
+          retina: '👁️ Retinal / Eye Disease', general: '🏥 General Medical Condition',
         };
         const domainLabels = {
-          skin: '📸 Skin photo detected',
-          xray: '📸 X-ray / grayscale scan detected',
-          retina: '📸 Retinal fundus scan detected',
-          general: '📸 Medical image detected',
+          skin: '📸 Skin photo detected', xray: '📸 X-ray / grayscale scan detected',
+          retina: '📸 Retinal fundus scan detected', general: '📸 Medical image detected',
         };
         const catLabel = categoryLabels[data.category] || '🩺 Medical';
         const domainLabel = domainLabels[data.domain_hint] || '';
@@ -2159,7 +2886,6 @@ export default function App() {
         result += `### 🔍 Primary Diagnosis: **${data.disease}**\n`;
         result += `**Confidence:** ${conf}%\n\n`;
 
-        // Top predictions from winning model
         if (data.predictions && data.predictions.length > 0) {
           result += `### 🔬 Differential Predictions\n`;
           data.predictions.forEach((p, i) => {
@@ -2176,7 +2902,6 @@ export default function App() {
         const botMsg = { type: 'assistant', content: result, timestamp: new Date().toLocaleTimeString(), source: `${data.category} model` };
         setMessages(prev => [...prev, botMsg]);
 
-        // Medical details from RAG + LLM
         if (data.medical_details) {
           const detailMsg = {
             type: 'assistant',
@@ -2186,18 +2911,13 @@ export default function App() {
           };
           setMessages(prev => [...prev, detailMsg]);
         }
-
       } else {
-        // --- General (non-medical) image ---
         let result = `## 🖼️ Image Analysis\n\n`;
-        if (data.description) {
-          result += `**Description:** ${data.description}\n\n`;
-        }
+        if (data.description) result += `**Description:** ${data.description}\n\n`;
         result += `*This image does not appear to be a recognizable medical image.\nUpload a clear skin photo, X-ray, retina scan, or other medical image for AI-powered diagnosis.*`;
         const botMsg = { type: 'assistant', content: result, timestamp: new Date().toLocaleTimeString() };
         setMessages(prev => [...prev, botMsg]);
       }
-
     } catch (err) {
       console.error('Image analysis error:', err);
       setMessages(prev => [...prev, { type: 'assistant', content: '⚠️ Image analysis failed. Please try again.', timestamp: time }]);

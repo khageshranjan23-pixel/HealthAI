@@ -26,6 +26,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1.api import api_router
 from app.api.image_api import router as image_router
+from app.api.skin_analysis_api import router as skin_router
 from app.core.config import CHAT_DB_PATH, PDF_PATH, VECTOR_STORE_DIR, SESSION_SECRET_KEY
 from app.core.logging_config import logger
 from app.services.chat_service import clinical_engine
@@ -98,6 +99,9 @@ app.add_middleware(
 
 # Image analysis API
 app.include_router(image_router)
+
+# SkinSeva skin disease analysis API
+app.include_router(skin_router)
 
 # Main API (chat, sessions, health etc.)
 app.include_router(api_router)

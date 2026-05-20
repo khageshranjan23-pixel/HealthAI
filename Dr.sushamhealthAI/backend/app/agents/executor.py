@@ -52,9 +52,42 @@ def ExecutorAgent(state: AgentState) -> AgentState:
 
     elif triage_round > 0 and collected_symptoms:
         # ── POST-TRIAGE COMPREHENSIVE DIAGNOSIS ────────────────────────
-        # This is the "final answer" after the doctor has asked follow-up
-        # questions. It should be MUCH more detailed and comprehensive.
+        # Uses the running Bayesian differential from the triage agent
+        # for a probability-weighted, evidence-anchored diagnosis.
         collected_text = "\n".join(f"  - {s}" for s in collected_symptoms)
+
+        # Get the differential diagnosis from triage
+        differential_history = state.get("differential_history", [])
+        current_differential = state.get("current_differential", [])
+        diff_section = ""
+
+        if current_differential:
+            diff_lines = []
+            for d in current_differential:
+                diff_lines.append(
+                    f"  - {d.get('condition', '?')}: {d.get('probability', '?')}% "
+                    f"(Evidence: {d.get('key_factors', 'N/A')})"
+                )
+            diff_section = (
+                "\n\nBAYESIAN DIFFERENTIAL DIAGNOSIS (computed from clinical interview):\n"
+                + "\n".join(diff_lines)
+                + "\n\nIMPORTANT: Use these probabilities to WEIGHT your assessment. "
+                "The top condition should be your primary diagnosis. Explain why the "
+                "evidence supports this ranking."
+            )
+        elif differential_history:
+            latest = differential_history[-1]
+            diff = latest.get("differential", [])
+            if diff:
+                diff_lines = []
+                for d in diff:
+                    diff_lines.append(
+                        f"  - {d.get('condition', '?')}: {d.get('probability', '?')}%"
+                    )
+                diff_section = (
+                    "\n\nDIFFERENTIAL DIAGNOSIS (from clinical reasoning):\n"
+                    + "\n".join(diff_lines)
+                )
 
         # Include RAG documents if available
         doc_context = ""
@@ -68,21 +101,27 @@ def ExecutorAgent(state: AgentState) -> AgentState:
 
         prompt = (
             "You are Dr.SushamHealthAI, an experienced and compassionate clinical physician. "
-            "You have just completed a clinical intake interview with the patient and gathered "
-            "all the necessary information. Now provide your COMPREHENSIVE medical assessment.\n\n"
+            "You have just completed a thorough clinical intake interview with the patient, "
+            "asking targeted discriminative questions to narrow down the diagnosis. "
+            "Now provide your COMPREHENSIVE medical assessment.\n\n"
             f"CLINICAL INTAKE SUMMARY:\n"
             f"The patient reported the following during your consultation:\n{collected_text}\n\n"
             f"CONVERSATION HISTORY:\n{history_context}\n"
+            f"{diff_section}"
             f"{doc_section}\n\n"
             "Now provide a DETAILED, well-structured medical response. "
             "Format your response EXACTLY like this:\n\n"
             "## 🩺 Clinical Assessment\n"
             "Start with a brief summary of what the patient has described, showing you understand their situation.\n\n"
-            "## 🔍 Possible Diagnoses\n"
-            "List 2-3 most likely conditions (differential diagnosis) with brief explanations of why each fits. "
-            "Rank them from most to least likely.\n\n"
+            "## 🔍 Differential Diagnosis\n"
+            "List the conditions ranked by probability (use the Bayesian differential if provided). "
+            "For each condition, explain:\n"
+            "- Why this condition fits the patient's symptoms\n"
+            "- What evidence supports it\n"
+            "- What evidence argues against it\n"
+            "Rank them from most to least likely with approximate probabilities.\n\n"
             "## 💊 Recommended Treatment\n"
-            "For the most likely diagnosis, provide:\n"
+            "For the PRIMARY (most likely) diagnosis, provide:\n"
             "- Over-the-counter medications (with dosage guidance)\n"
             "- Prescription options (mention the patient should consult a doctor)\n"
             "- Non-pharmacological treatments\n\n"
@@ -170,6 +209,8 @@ def ExecutorAgent(state: AgentState) -> AgentState:
     if triage_round > 0:
         state["triage_round"] = 0
         state["collected_symptoms"] = []
+        state["differential_history"] = []
+        state["current_differential"] = []
         logger.info("Executor: Triage context reset after diagnosis delivery")
 
     return state

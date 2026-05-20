@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-backend/test_images/
-*.jpg
-*.png
-*.mp4
->>>>>>> c2927c9 (clean deployment version)
-=======
 # =========================
 # OS / Editor
 # =========================
@@ -16,12 +6,13 @@ Thumbs.db
 .vscode/
 .idea/
 
->>>>>>> c5b34cc (clean commit)
 # =========================
-# Python
+# Python & Virtual Env
 # =========================
 .venv/
 venv/
+Lib/
+Scripts/
 __pycache__/
 *.pyc
 *.pyo
@@ -31,25 +22,38 @@ __pycache__/
 
 # Env files (IMPORTANT)
 .env
+.env.development
+.env.production
+.env.local
+
+# =========================
+# Models & Cache
+# =========================
+*.pth
+*.pt
+**/model_cache/
 
 # =========================
 # Backend
 # =========================
-backend/logs/
-backend/test_images/
+**/backend/logs/
+**/backend/test_images/
 
 # Ignore storage/data (but allow important files later if needed)
-backend/storage/*
-backend/data/*
+**/backend/storage/*
+**/backend/data/*
+
+# Ignore all PDF files (RAG pdfs)
+*.pdf
 
 # =========================
 # Frontend (VERY IMPORTANT)
 # =========================
-frontend/node_modules/
-frontend/.vite/
-frontend/dist/
-frontend/build/
-frontend/coverage/
+**/frontend/node_modules/
+**/frontend/.vite/
+**/frontend/dist/
+**/frontend/build/
+**/frontend/coverage/
 
 # =========================
 # General Node
@@ -75,10 +79,3 @@ build/
 *.mp4
 *.jpg
 *.png
-
-# =========================
-# IMPORTANT: ALLOW MODELS & PDF
-# =========================
-!*.pth
-!*.pt
-!*.pdf

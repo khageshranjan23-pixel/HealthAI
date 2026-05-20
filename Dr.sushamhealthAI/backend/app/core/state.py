@@ -30,10 +30,14 @@ class AgentState(TypedDict):
 
     # ── Clinical Triage (Follow-Up Questions) ──────────────────────
     triage_status: Optional[str]        # "needs_info" | "ready_to_diagnose" | None
-    triage_round: int                   # how many Q&A rounds so far (max 3)
+    triage_round: int                   # how many Q&A rounds so far
     collected_symptoms: List[str]       # accumulated patient details across turns
-    follow_up_data: Optional[Dict[str, Any]]  # structured follow-up for frontend chips
+    follow_up_data: Optional[Dict[str, Any]]  # structured follow-up for frontend
     is_medical_query: bool              # whether planner flagged this as medical
+
+    # ── Two-Pass Discriminative Diagnostic Reasoning ──────────────
+    differential_history: List[Dict]    # Bayesian differential per round
+    current_differential: List[Dict]    # latest differential for executor
 
 
 def initialize_conversation_state() -> AgentState:
@@ -61,6 +65,9 @@ def initialize_conversation_state() -> AgentState:
         "collected_symptoms": [],
         "follow_up_data": None,
         "is_medical_query": False,
+        # Two-Pass Differential
+        "differential_history": [],
+        "current_differential": [],
     }
 
 
