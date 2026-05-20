@@ -1,4 +1,24 @@
-# Dr.SushamHealthAI
+<div align="center">
+
+# 🩺 Dr. Susham HealthAI
+
+### An AI-powered Medical Consultation & Diagnostic Platform
+
+<br/>
+
+## 🔗 [▶ CLICK HERE TO OPEN THE APP](https://khagesh1-healthai.hf.space)
+
+**Live URL: https://khagesh1-healthai.hf.space**
+
+<br/>
+
+[![Open Live App](https://img.shields.io/badge/🚀%20Open%20Live%20App-Click%20Here-brightgreen?style=for-the-badge)](https://khagesh1-healthai.hf.space)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/khageshranjan23-pixel/HealthAI)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Space-yellow?style=for-the-badge)](https://huggingface.co/spaces/Khagesh1/HealthAI)
+
+</div>
+
+---
 
 An AI-powered medical assistant with a FastAPI backend and a React frontend for conversational clinical guidance, session-based chat, and image-based disease analysis.
 
