@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🩺 Dr. Susham HealthAI
+# 🩺 NewGenHealthAI
 
 ### An AI-powered Medical Consultation & Diagnostic Platform
 
@@ -24,7 +24,7 @@ An AI-powered medical assistant with a FastAPI backend and a React frontend for 
 
 ## Overview
 
-Dr.SushamHealthAI is a full-stack healthcare AI application designed to support medical interaction workflows through:
+Dr.SushamHealthAI/NewGenHealthAI is a full-stack healthcare AI application designed to support medical interaction workflows through:
 
 * conversational AI assistance
 * image-based disease analysis
