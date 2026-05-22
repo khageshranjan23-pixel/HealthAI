@@ -30,6 +30,7 @@ wheels/
 *.db
 *.sqlite3
 backend/app/storage/
+backend/storage/
 backend/logs/
 model_cache/
 

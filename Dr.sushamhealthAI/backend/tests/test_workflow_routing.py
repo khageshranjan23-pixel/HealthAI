@@ -11,8 +11,8 @@ from app.core.langgraph_workflow import (
 
 
 def test_route_after_planner():
-    assert _route_after_planner({"current_tool": "retriever"}) == "retriever"
-    assert _route_after_planner({"current_tool": "llm_agent"}) == "llm_agent"
+    assert _route_after_planner({"current_tool": "retriever"}) == "triage_agent"
+    assert _route_after_planner({"current_tool": "llm_agent"}) == "triage_agent"
 
 
 def test_route_after_llm():

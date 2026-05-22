@@ -18,9 +18,9 @@ def test_routing_logic():
 
     # Planner routing
     state["current_tool"] = "retriever"
-    assert _route_after_planner(state) == "retriever"
+    assert _route_after_planner(state) == "triage_agent"
     state["current_tool"] = "other"
-    assert _route_after_planner(state) == "llm_agent"
+    assert _route_after_planner(state) == "triage_agent"
 
     # LLM routing
     state["llm_success"] = True

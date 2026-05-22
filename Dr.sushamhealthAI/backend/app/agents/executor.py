@@ -170,6 +170,7 @@ def ExecutorAgent(state: AgentState) -> AgentState:
     if triage_round > 0:
         state["triage_round"] = 0
         state["collected_symptoms"] = []
+        state["questions_asked"] = []
         logger.info("Executor: Triage context reset after diagnosis delivery")
 
     return state

@@ -32,6 +32,7 @@ class AgentState(TypedDict):
     triage_status: Optional[str]        # "needs_info" | "ready_to_diagnose" | None
     triage_round: int                   # how many Q&A rounds so far (max 3)
     collected_symptoms: List[str]       # accumulated patient details across turns
+    questions_asked: List[str]          # exact questions already asked (to avoid repeats)
     follow_up_data: Optional[Dict[str, Any]]  # structured follow-up for frontend chips
     is_medical_query: bool              # whether planner flagged this as medical
 
@@ -59,6 +60,7 @@ def initialize_conversation_state() -> AgentState:
         "triage_status": None,
         "triage_round": 0,
         "collected_symptoms": [],
+        "questions_asked": [],
         "follow_up_data": None,
         "is_medical_query": False,
     }

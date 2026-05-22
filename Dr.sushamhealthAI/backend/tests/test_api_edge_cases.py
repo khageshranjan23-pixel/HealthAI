@@ -6,7 +6,7 @@ from app.services import chat_service, db_service
 
 def test_chat_with_header_session_id(test_client, mock_dependencies):
     """Test chat endpoint with X-Session-ID header"""
-    with patch.object(chat_service, 'process_message') as mock_process:
+    with patch.object(chat_service.clinical_engine, 'process_message') as mock_process:
         mock_process.return_value = {
             "response": "Test response",
             "source": "Test",
@@ -44,4 +44,4 @@ def test_clear_with_header(test_client):
     """Test clear endpoint with X-Session-ID header"""
     response = test_client.post("/api/v1/clear", headers={"X-Session-ID": "test-id"})
     assert response.status_code == 200
-    assert response.json()["message"] == "Conversation cleared"
+    assert response.json()["message"] == "Clinical state cleared"

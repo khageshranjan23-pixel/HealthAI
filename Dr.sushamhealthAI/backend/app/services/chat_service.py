@@ -93,13 +93,13 @@ ChatService = ClinicalEngine
 
 def __getattr__(name: str) -> Any:
     """Forward module attribute lookups to the clinical_engine singleton."""
-    if name in ("workflow_app", "initialize_workflow"):
+    if hasattr(clinical_engine, name):
         return getattr(clinical_engine, name)
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 def __setattr__(name: str, value: Any) -> None:
     """Forward module attribute sets to the clinical_engine singleton."""
-    if name in ("workflow_app", "initialize_workflow"):
+    if hasattr(clinical_engine, name) or name in ("workflow_app", "initialize_workflow"):
         setattr(clinical_engine, name, value)
     else:
         globals()[name] = value

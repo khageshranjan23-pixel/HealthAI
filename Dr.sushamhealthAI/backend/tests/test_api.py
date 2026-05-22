@@ -6,7 +6,7 @@ from app.services import chat_service, db_service
 def test_health_check(test_client):
     response = test_client.get("/api/v1/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "healthy", "service": "MediGenius Backend v2"}
+    assert response.json() == {"status": "healthy", "service": "Dr.SushamHealthAI Backend v3"}
 
 
 def test_new_chat(test_client):
@@ -15,7 +15,7 @@ def test_new_chat(test_client):
     data = response.json()
     assert data["success"] is True
     assert "session_id" in data
-    assert data["message"] == "New chat created"
+    assert data["message"] == "New clinical session created"
 
 
 def test_get_sessions(test_client):
@@ -53,7 +53,7 @@ def test_chat_flow_success(test_client, mock_dependencies):
 
 
 def test_chat_flow_system_not_initialized(test_client):
-    with patch.object(chat_service, 'workflow_app', None):
+    with patch.object(chat_service.clinical_engine, 'workflow_app', None):
         response = test_client.post(
             "/api/v1/chat",
             json={"message": "Hello"},
@@ -89,4 +89,4 @@ def test_delete_session(test_client):
 def test_clear_conversation(test_client):
     response = test_client.post("/api/v1/clear", headers={"X-Session-ID": "test-id"})
     assert response.status_code == 200
-    assert response.json()["message"] == "Conversation cleared"
+    assert response.json()["message"] == "Clinical state cleared"
