@@ -121,7 +121,7 @@ def test_lifespan_no_pdf():
     pdf_paths = ["medical_book.pdf", "database/medical_book.pdf"]
     with patch("os.path.exists", side_effect=lambda p: False if any(x in p for x in pdf_paths) else True):
         with patch("app.main.db_service"):
-            with patch("app.main.chat_service"):
+            with patch("app.main.clinical_engine"):
                 import asyncio
                 gen = lifespan(app)
 
