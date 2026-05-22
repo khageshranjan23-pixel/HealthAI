@@ -12,6 +12,160 @@ import './index.css';
 // ═══════════════════════════════════════════════════════════════
 //  WORLD-CLASS CSS DESIGN SYSTEM
 // ═══════════════════════════════════════════════════════════════
+const AUTH_CSS = `
+/* ═══ AUTH PAGE ══════════════════════════════════════════════ */
+.auth-root {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: #020617; z-index: 9999; padding: 16px;
+}
+.auth-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.auth-orb {
+  position: absolute; border-radius: 50%; filter: blur(120px);
+  animation: authFloat 20s ease-in-out infinite;
+}
+.auth-orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: radial-gradient(circle, rgba(0,229,204,0.15) 0%, transparent 70%); }
+.auth-orb-2 { width: 400px; height: 400px; bottom: -100px; right: -80px; background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%); animation-delay: -10s; }
+@keyframes authFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(30px, -40px) scale(1.05); }
+}
+.auth-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+.auth-card {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 440px;
+  background: linear-gradient(145deg, rgba(9,15,30,0.98) 0%, rgba(6,12,24,0.98) 100%);
+  border: 1px solid rgba(0,229,204,0.15);
+  border-radius: 28px;
+  padding: 40px 36px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 80px rgba(0,229,204,0.05), inset 0 1px 0 rgba(255,255,255,0.06);
+  backdrop-filter: blur(30px);
+  animation: authCardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes authCardIn {
+  from { opacity:0; transform: translateY(30px) scale(0.95); }
+  to   { opacity:1; transform: none; }
+}
+.auth-card::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,229,204,0.6), transparent);
+}
+.auth-logo {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.auth-logo-gem {
+  width: 52px; height: 52px; border-radius: 16px;
+  background: linear-gradient(135deg, #0891b2, #22d3ee, #00f5ff);
+  box-shadow: 0 0 40px rgba(0,245,255,0.4), 0 8px 24px rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #020617;
+  animation: authGemPulse 3s ease-in-out infinite;
+}
+@keyframes authGemPulse {
+  0%,100% { box-shadow: 0 0 30px rgba(0,245,255,0.3), 0 8px 24px rgba(0,0,0,0.4); }
+  50%      { box-shadow: 0 0 60px rgba(0,245,255,0.6), 0 8px 24px rgba(0,0,0,0.4); }
+}
+.auth-logo-text { display: flex; flex-direction: column; }
+.auth-logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; color: #e6f1ff; letter-spacing: -0.02em; }
+.auth-logo-sub  { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #00f5ff; margin-top: 2px; }
+.auth-eyebrow {
+  text-align: center; margin-bottom: 24px;
+}
+.auth-eyebrow h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: #e6f1ff; letter-spacing: -0.02em; margin-bottom: 6px; }
+.auth-eyebrow p  { font-size: 13px; color: #64748b; line-height: 1.5; }
+.auth-tabs {
+  display: flex; gap: 4px; padding: 4px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+  margin-bottom: 28px;
+}
+.auth-tab {
+  flex: 1; padding: 9px 0; border: none; border-radius: 9px; cursor: pointer;
+  font-family: 'Figtree', sans-serif; font-size: 13.5px; font-weight: 600;
+  transition: all 0.2s ease;
+  background: transparent; color: #64748b;
+}
+.auth-tab.active {
+  background: linear-gradient(135deg, #0891b2, #22d3ee);
+  color: #020617;
+  box-shadow: 0 4px 16px rgba(0,229,204,0.25);
+}
+.auth-field { margin-bottom: 16px; }
+.auth-label { display: block; font-size: 12px; font-weight: 600; color: #94a3b8; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+.auth-input-wrap { position: relative; }
+.auth-input {
+  width: 100%; padding: 13px 16px; padding-right: 44px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px; font-family: 'Figtree', sans-serif; font-size: 14px; color: #e6f1ff;
+  transition: all 0.2s ease; outline: none; box-sizing: border-box;
+}
+.auth-input:focus { border-color: rgba(0,229,204,0.4); background: rgba(0,229,204,0.04); box-shadow: 0 0 0 3px rgba(0,229,204,0.08); }
+.auth-input::placeholder { color: #334155; }
+.auth-eye {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: #64748b; cursor: pointer; font-size: 13px;
+  transition: color 0.2s; padding: 4px;
+}
+.auth-eye:hover { color: #00f5ff; }
+.auth-submit {
+  width: 100%; padding: 14px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, #22d3ee, #00f5ff, #38bdf8);
+  color: #020617; font-family: 'Figtree', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.01em;
+  box-shadow: 0 4px 24px rgba(0,229,204,0.3);
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  margin-top: 8px; position: relative; overflow: hidden;
+}
+.auth-submit:hover:not(:disabled) { transform: translateY(-2px) scale(1.01); box-shadow: 0 8px 36px rgba(0,229,204,0.45); }
+.auth-submit:active { transform: scale(0.98); }
+.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.auth-submit-shine {
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: skewX(-20deg); transition: left 0.6s ease;
+}
+.auth-submit:hover .auth-submit-shine { left: 150%; }
+.auth-err {
+  margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+  color: #f87171; font-size: 12.5px; display: flex; align-items: center; gap: 8px;
+}
+.auth-ok {
+  margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+  background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
+  color: #4ade80; font-size: 12.5px; display: flex; align-items: center; gap: 8px;
+}
+.auth-footer { text-align: center; margin-top: 20px; font-size: 11.5px; color: #334155; }
+.auth-footer strong { color: #00f5ff; }
+/* ═══ USER CHIP ═══════════════════════════════════════════════ */
+.nc-user-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 12px; margin-bottom: 8px;
+  background: rgba(0,229,204,0.04); border: 1px solid rgba(0,229,204,0.12);
+}
+.nc-user-avatar {
+  width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+  background: linear-gradient(135deg, #0891b2, #00f5ff);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #020617; font-weight: 700; font-family: 'Bricolage Grotesque';
+}
+.nc-user-info { flex: 1; min-width: 0; }
+.nc-user-name { font-size: 13px; font-weight: 600; color: #e6f1ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nc-user-role { font-size: 10px; color: #00f5ff; font-family: 'JetBrains Mono'; letter-spacing: 0.08em; }
+.nc-logout-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 9px 12px; border-radius: 10px; border: none; cursor: pointer;
+  background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.18);
+  color: #f87171; font-family: 'Figtree', sans-serif; font-size: 12.5px; font-weight: 600;
+  transition: all 0.2s ease; margin-bottom: 8px;
+}
+.nc-logout-btn:hover { background: rgba(239,68,68,0.14); border-color: rgba(239,68,68,0.35); color: #fca5a5; transform: translateY(-1px); }
+`;
+
 const WORLD_CLASS_CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
@@ -1284,7 +1438,7 @@ function buildDownloadText(chatHistory) {
 // ═══════════════════════════════════════════════════════════════
 //  SECTION 3 — SIDEBAR
 // ═══════════════════════════════════════════════════════════════
-function Sidebar({ sidebarOpen, sessions, currentSessionId, onNewChat, onLoadSession, onDeleteSession, onToggleTheme, theme }) {
+function Sidebar({ sidebarOpen, sessions, currentSessionId, onNewChat, onLoadSession, onDeleteSession, onToggleTheme, theme, user, onLogout }) {
   return (
     <aside className={`nc-sidebar${sidebarOpen ? '' : ' collapsed'}`}>
 
@@ -1432,6 +1586,22 @@ function Sidebar({ sidebarOpen, sessions, currentSessionId, onNewChat, onLoadSes
           </div>
         </div>
 
+        {/* User chip + logout */}
+        {user && (
+          <>
+            <div className="nc-user-chip">
+              <div className="nc-user-avatar">{user.username ? user.username[0].toUpperCase() : '?'}</div>
+              <div className="nc-user-info">
+                <div className="nc-user-name">{user.username}</div>
+                <div className="nc-user-role">● Online</div>
+              </div>
+            </div>
+            <button className="nc-logout-btn" onClick={onLogout}>
+              <i className="fas fa-right-from-bracket" />
+              Sign Out
+            </button>
+          </>
+        )}
         <button className="nc-theme-toggle" onClick={onToggleTheme}>
           <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
           {theme === 'dark' ? 'Switch to Light' : 'Switch to Dark'}
@@ -1948,6 +2118,132 @@ function InputArea({ inputValue, setInputValue, onSend, isTyping, inputRef, onIm
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  LOGIN PAGE COMPONENT
+// ═══════════════════════════════════════════════════════════════
+function LoginPage({ onAuthSuccess }) {
+  const [tab, setTab] = useState('login');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPw, setShowPw] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+  const [ok, setOk] = useState('');
+
+  useEffect(() => {
+    const id = 'auth-styles';
+    if (!document.getElementById(id)) {
+      const s = document.createElement('style');
+      s.id = id; s.textContent = AUTH_CSS;
+      document.head.appendChild(s);
+    }
+  }, []);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setErr(''); setOk('');
+    if (!username.trim() || !password) { setErr('Please fill in all fields.'); return; }
+    setLoading(true);
+    try {
+      const endpoint = tab === 'login' ? '/api/v1/auth/login' : '/api/v1/auth/register';
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username.trim(), password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setErr(data.detail || 'Something went wrong. Please try again.');
+      } else {
+        setOk(tab === 'login' ? `Welcome back, ${data.username}! 👋` : `Account created! Welcome, ${data.username}! 🎉`);
+        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem('auth_user', JSON.stringify({ username: data.username, user_id: data.user_id }));
+        setTimeout(() => onAuthSuccess({ username: data.username, user_id: data.user_id }, data.token), 800);
+      }
+    } catch {
+      setErr('Connection error. Please check your internet and try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="auth-root">
+      <div className="auth-bg">
+        <div className="auth-grid" />
+        <div className="auth-orb auth-orb-1" />
+        <div className="auth-orb auth-orb-2" />
+      </div>
+      <div className="auth-card">
+        <div className="auth-logo">
+          <div className="auth-logo-gem"><i className="fas fa-heartbeat" /></div>
+          <div className="auth-logo-text">
+            <div className="auth-logo-name">Dr. Susham HealthAI</div>
+            <div className="auth-logo-sub">Personal Medical AI · Free Forever</div>
+          </div>
+        </div>
+        <div className="auth-eyebrow">
+          <h2>{tab === 'login' ? 'Welcome Back' : 'Create Account'}</h2>
+          <p>{tab === 'login'
+            ? 'Sign in to access your personal AI health assistant and full chat history.'
+            : 'Register for free — your own private AI health assistant, forever.'
+          }</p>
+        </div>
+        <div className="auth-tabs">
+          <button className={`auth-tab${tab === 'login' ? ' active' : ''}`} onClick={() => { setTab('login'); setErr(''); setOk(''); }}>Sign In</button>
+          <button className={`auth-tab${tab === 'register' ? ' active' : ''}`} onClick={() => { setTab('register'); setErr(''); setOk(''); }}>Register</button>
+        </div>
+        <form onSubmit={submit}>
+          <div className="auth-field">
+            <label className="auth-label">Username</label>
+            <div className="auth-input-wrap">
+              <input
+                id="auth-username"
+                className="auth-input"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                autoComplete="username"
+                autoFocus
+              />
+            </div>
+          </div>
+          <div className="auth-field">
+            <label className="auth-label">Password</label>
+            <div className="auth-input-wrap">
+              <input
+                id="auth-password"
+                className="auth-input"
+                type={showPw ? 'text' : 'password'}
+                placeholder={tab === 'register' ? 'Min 6 characters' : 'Enter your password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete={tab === 'login' ? 'current-password' : 'new-password'}
+              />
+              <button type="button" className="auth-eye" onClick={() => setShowPw(v => !v)} tabIndex={-1}>
+                <i className={`fas ${showPw ? 'fa-eye-slash' : 'fa-eye'}`} />
+              </button>
+            </div>
+          </div>
+          {err && <div className="auth-err"><i className="fas fa-circle-exclamation" />{err}</div>}
+          {ok  && <div className="auth-ok"><i className="fas fa-circle-check" />{ok}</div>}
+          <button type="submit" id="auth-submit" className="auth-submit" disabled={loading}>
+            <div className="auth-submit-shine" />
+            {loading ? <><i className="fas fa-spinner fa-spin" /> &nbsp;Please wait…</> :
+              tab === 'login' ? <><i className="fas fa-right-to-bracket" /> &nbsp;Sign In</> :
+                               <><i className="fas fa-user-plus" /> &nbsp;Create Free Account</>
+            }
+          </button>
+        </form>
+        <div className="auth-footer">
+          <strong>100% Free</strong> · Your data is private & isolated · No credit card needed
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  SECTION 6 — APP ROOT (ALL CORE LOGIC 100% PRESERVED)
 // ═══════════════════════════════════════════════════════════════
 const API_BASE = '/api/v1';
@@ -1969,6 +2265,45 @@ export default function App() {
     if (window.innerWidth <= 768) return false;
     return localStorage.getItem('sidebarOpen') !== 'false';
   });
+
+  // ── Auth state ─────────────────────────────────────────────
+  const [user, setUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('auth_user')); } catch { return null; }
+  });
+  const [authToken, setAuthToken] = useState(() => localStorage.getItem('auth_token') || null);
+
+  const handleAuthSuccess = useCallback((userData, token) => {
+    setUser(userData);
+    setAuthToken(token);
+  }, []);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      if (authToken) {
+        await fetch(`${API_BASE}/auth/logout`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${authToken}` },
+        });
+      }
+    } catch { /* silent */ }
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    setUser(null);
+    setAuthToken(null);
+    setMessages([]);
+    setChatHistory([]);
+    setSessions(null);
+    setShowWelcome(true);
+  }, [authToken]);
+
+  // Helper: build auth headers
+  const authHeaders = useCallback((extra = {}) => {
+    const h = { ...extra };
+    if (authToken) h['Authorization'] = `Bearer ${authToken}`;
+    return h;
+  }, [authToken]);
+  // ───────────────────────────────────────────────────────────
+
   const [sessions, setSessions] = useState(null);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -2026,7 +2361,7 @@ export default function App() {
   // Load sessions
   const loadSessions = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/sessions`);
+      const res = await fetch(`${API_BASE}/sessions`, { headers: authHeaders() });
       const data = await res.json();
       if (data.success && data.sessions) setSessions(data.sessions);
     } catch { setSessions([]); }
@@ -2034,10 +2369,11 @@ export default function App() {
 
   // Mount: load history
   useEffect(() => {
+    if (!user) return; // Don't load sessions if not logged in
     loadSessions();
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/history`);
+        const res = await fetch(`${API_BASE}/history`, { headers: authHeaders() });
         const data = await res.json();
         if (data.success && data.messages && data.messages.length > 0) {
           const msgs = data.messages.map(m => ({
@@ -2048,12 +2384,12 @@ export default function App() {
         }
       } catch { /* silent */ }
     })();
-  }, [loadSessions]);
+  }, [loadSessions, user]);
 
   // Load session
   const loadSession = useCallback(async (sessionId) => {
     try {
-      const res = await fetch(`${API_BASE}/session/${sessionId}`);
+      const res = await fetch(`${API_BASE}/session/${sessionId}`, { headers: authHeaders() });
       const data = await res.json();
       if (data.success) {
         setCurrentSessionId(sessionId);
@@ -2071,7 +2407,7 @@ export default function App() {
   const deleteSession = useCallback(async (sessionId) => {
     if (!window.confirm('Delete this conversation?')) return;
     try {
-      const res = await fetch(`${API_BASE}/session/${sessionId}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/session/${sessionId}`, { method: 'DELETE', headers: authHeaders() });
       if (res.ok) {
         await loadSessions();
         if (currentSessionId === sessionId) createNewChat();
@@ -2084,7 +2420,7 @@ export default function App() {
   // New chat
   const createNewChat = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/new-chat`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/new-chat`, { method: 'POST', headers: authHeaders() });
       if (res.ok) {
         setMessages([]); setChatHistory([]); setCurrentSessionId(null);
         setShowWelcome(true); await loadSessions();
@@ -2097,7 +2433,7 @@ export default function App() {
   const clearChat = useCallback(async () => {
     if (!window.confirm('Clear this conversation?')) return;
     try {
-      const res = await fetch(`${API_BASE}/clear`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/clear`, { method: 'POST', headers: authHeaders() });
       if (res.ok) {
         setMessages([]); setChatHistory([]); setShowWelcome(true);
         showToast('Conversation cleared', 'success');
@@ -2131,7 +2467,7 @@ export default function App() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await fetch(`${API_BASE}/analyze-image`, { method: 'POST', body: formData });
+      const res = await fetch(`${API_BASE}/analyze-image`, { method: 'POST', body: formData, headers: authHeaders() });
       const data = await res.json();
       console.log('Image API Response:', data);
 
@@ -2220,7 +2556,7 @@ export default function App() {
     setIsTyping(true);
     try {
       const res = await fetch(`${API_BASE}/chat`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ message }),
       });
       const data = await res.json();
@@ -2262,6 +2598,11 @@ export default function App() {
   const toastIcon = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
 
   // ═══ RENDER ════════════════════════════════════════════════
+  // Show login page if not authenticated
+  if (!user || !authToken) {
+    return <LoginPage onAuthSuccess={handleAuthSuccess} />;
+  }
+
   return (
     <>
       {/* Cinematic Background */}
@@ -2286,6 +2627,8 @@ export default function App() {
           onDeleteSession={deleteSession}
           onToggleTheme={toggleTheme}
           theme={theme}
+          user={user}
+          onLogout={handleLogout}
         />
 
         {/* Main */}

@@ -4,7 +4,7 @@ ClinicalEngine: orchestrates the LangGraph agentic workflow for each chat messag
 """
 
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from app.core.langgraph_workflow import create_workflow
 from app.core.logging_config import logger
@@ -27,15 +27,17 @@ class ClinicalEngine:
             self.workflow_app = create_workflow()
             logger.info("Clinical Intelligence workflow ready")
 
-    async def process_message(self, session_id: str, message: str) -> Dict[str, Any]:
+    async def process_message(
+        self, session_id: str, message: str, user_id: Optional[int] = None
+    ) -> Dict[str, Any]:
         """Run the clinical pipeline for a single user message."""
         logger.info("Processing message for session %s...", session_id[:8])
 
         if not self.workflow_app:
             raise ValueError("Workflow not initialized")
 
-        # Persist user message
-        db_service.save_message(session_id, "user", message)
+        # Persist user message (tagged with user_id for isolation)
+        db_service.save_message(session_id, "user", message, user_id=user_id)
 
         # Initialize or retrieve conversation state
         if session_id not in self.conversation_states:
@@ -57,8 +59,8 @@ class ClinicalEngine:
         response_text = result.get("generation", "Unable to generate response.")
         source = result.get("source", "Unknown")
 
-        # Persist assistant response
-        db_service.save_message(session_id, "assistant", response_text, source)
+        # Persist assistant response (tagged with user_id for isolation)
+        db_service.save_message(session_id, "assistant", response_text, source, user_id=user_id)
 
         # Build response — include follow-up data if triage is asking questions
         response_dict = {
@@ -85,3 +87,7 @@ class ClinicalEngine:
 
 # Module-level singleton
 clinical_engine = ClinicalEngine()
+
+# Backwards-compatibility alias used by tests
+ChatService = ClinicalEngine
+

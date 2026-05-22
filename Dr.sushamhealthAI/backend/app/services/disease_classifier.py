@@ -502,7 +502,68 @@ class DiseaseClassifier:
         self.base_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models"
         )
+        self._download_models_if_missing()
         self.model_configs = self._discover_models()
+
+    def _download_models_if_missing(self):
+        """Download the .pth models from a Hugging Face model repository if they don't exist locally."""
+        repo_id = os.environ.get("HF_MODEL_REPO", "Khagesh1/HealthAI-Models")
+
+        # Expected filenames
+        expected_files = {
+            "skin": "skin_disease_model.pth",
+            "xray": "xray_fracture_model.pth",
+            "retina": "retina_model.pth",
+            "general": "general_disease_model.pth"
+        }
+
+        os.makedirs(self.base_dir, exist_ok=True)
+
+        # Check if any .pth file is missing
+        missing_any = False
+        try:
+            files = os.listdir(self.base_dir)
+            for kw, filename in expected_files.items():
+                has_pth = any(kw in f.lower() and f.endswith(".pth") for f in files)
+                if not has_pth:
+                    missing_any = True
+                    break
+        except Exception:
+            missing_any = True
+
+        if not missing_any:
+            logger.info("All medical model files verified present locally.")
+            return
+
+        logger.info("Some medical model files are missing. Attempting automatic download from Hugging Face Repo: %s...", repo_id)
+
+        try:
+            from huggingface_hub import hf_hub_download
+            import shutil
+
+            for kw, filename in expected_files.items():
+                dest_path = os.path.join(self.base_dir, filename)
+                # Check if it already exists to avoid re-downloading
+                try:
+                    current_files = os.listdir(self.base_dir)
+                except Exception:
+                    current_files = []
+                has_pth = any(kw in f.lower() and f.endswith(".pth") for f in current_files)
+                if not has_pth:
+                    logger.info(f"[{kw}] Downloading {filename} from HF {repo_id}...")
+                    try:
+                        downloaded_path = hf_hub_download(
+                            repo_id=repo_id,
+                            filename=filename,
+                            repo_type="model"
+                        )
+                        shutil.copy(downloaded_path, dest_path)
+                        logger.info(f"[{kw}] Successfully downloaded and copied model to {dest_path}")
+                    except Exception as e:
+                        logger.error(f"[{kw}] Failed to download {filename} from Hugging Face: {e}")
+        except Exception as e:
+            logger.error("Failed to initialize model downloader: %s. Ensure huggingface_hub is installed.", e)
+
 
     def _discover_models(self):
         """Automatically find model and class files in the models directory."""
