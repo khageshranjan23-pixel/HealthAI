@@ -50,3 +50,7 @@ Thumbs.db
 # Docker
 # =========================
 *.tar
+
+# Test images
+backend/test_images/
+Dr.sushamhealthAI/backend/test_images/

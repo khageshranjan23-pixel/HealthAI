@@ -47,3 +47,6 @@ backend/app/static/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Test images
+backend/test_images/
