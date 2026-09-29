@@ -302,7 +302,7 @@ It must not be used as a replacement for licensed medical diagnosis, treatment, 
 
 * Khagesh Ranjan — Developer
 * Ajitesh Baghel - Developer
-
+* Sudipto Ghosh — Developer
 ## License
 
 Add your preferred license here, for example:
